@@ -1,0 +1,114 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Graph API
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /companyList:
+    x-swagger-router-controller: companyList
+    get:
+      description: Returns list of companies with basic infos
+      # used as the method name of the controller
+      operationId: getCompanyList
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: object
+            properties:
+              companyList:
+                type: array
+                items:
+                  $ref: "#/definitions/companyInfos"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /companySharePrice:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: companySharePrice
+    get:
+      description: Returns company share price for a day
+      # used as the method name of the controller
+      operationId: getCompanySharePrice
+      parameters:
+        - name: companyName
+          in: query
+          description: The name of the company
+          required: true
+          type: string
+        - name: date
+          in: query
+          description: The date to reach infos
+          required: true
+          type: string
+          format: date
+        - name: currencyName
+          in: query
+          description: The name of the currency
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/SharePriceResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  companyInfos:
+    required:
+      - name
+      - businessCountry
+      - naeCode
+    properties:
+      name:
+        type: string
+      businessCountry:
+        type: string
+      naeCode:
+        type: integer
+        format: int32
+  SharePriceResponse:
+    required:
+      - sharePrices
+    properties:
+      sharePrices:
+        type: array
+        items:
+          type: object
+          properties:
+            time:
+              type: string
+              format: date-time
+            amount:
+              type: number
+              format: float
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
