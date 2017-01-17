@@ -1,0 +1,124 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: Graph API
+host: 'localhost:10010'
+basePath: /
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /companyList:
+    get:
+      description: Returns list of companies with basic infos
+      operationId: getCompanyList
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: object
+            properties:
+              companyList:
+                type: array
+                items:
+                  $ref: '#/definitions/companyInfos'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /companySharePrice:
+    get:
+      description: Returns company share price for a day
+      operationId: getCompanySharePrice
+      parameters:
+        - name: companyName
+          in: query
+          description: The name of the company
+          required: true
+          type: string
+        - name: date
+          in: query
+          description: The date to reach infos
+          required: true
+          type: string
+          format: date
+        - name: currencyName
+          in: query
+          description: The name of the currency
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/SharePriceResponse'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /oneNewPrice:
+    get:
+      description: Returns a one new share price for previous hour
+      operationId: getOneNewprice
+      parameters:
+        - name: companyName
+          in: query
+          description: The name of the company
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/OneNewPriceResponse'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /swagger: {}
+definitions:
+  companyInfos:
+    required:
+      - name
+      - businessCountry
+      - naeCode
+    properties:
+      name:
+        type: string
+      businessCountry:
+        type: string
+      naeCode:
+        type: integer
+        format: int32
+  SharePriceResponse:
+    required:
+      - sharePrices
+    properties:
+      sharePrices:
+        type: array
+        items:
+          type: object
+          properties:
+            time:
+              type: string
+              format: date-time
+            amount:
+              type: number
+              format: float
+  OneNewPriceResponse:
+    required:
+      - newPrice
+    properties:
+      newPrice:
+        type: number
+        format: float
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
