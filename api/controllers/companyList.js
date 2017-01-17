@@ -7,14 +7,23 @@ module.exports = {
 function getCompanyList(req, res) {
   var list = []
 
-  for (var i = 0; i < 16; i++) {
+  for (var i = 0; i < 10; i++) {
     list[list.length] = {
       name: rndStr(),
       businessCountry: rndStr(),
       naeCode: Math.floor(Math.random() * 1e6)
     }
   }
-
+  
+  //tmp :
+  list[0].name = "ENGIE";
+  list[1].name = "Société Générale";
+  list[2].name = "Air France";
+  list[3].name = "SNCF";
+  list[4].name = "Accord";
+  list[5].name = "Peugeot";
+  list[6].name = "BNP Paribas"
+  
   res.json({ companyList: list });
 }
 

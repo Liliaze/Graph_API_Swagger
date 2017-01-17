@@ -1,31 +1,23 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  version: "0.0.1"
+  version: 0.0.1
   title: Graph API
-# during dev, should point to your local machine
-host: localhost:10010
-# basePath prefixes all resource paths 
+host: 'localhost:10010'
 basePath: /
-# 
 schemes:
-  # tip: remove http to make production-grade
   - http
   - https
-# format of bodies a client can send (Content-Type)
 consumes:
   - application/json
-# format of the responses to the client (Accepts)
 produces:
   - application/json
 paths:
   /companyList:
-    x-swagger-router-controller: companyList
     get:
       description: Returns list of companies with basic infos
-      # used as the method name of the controller
       operationId: getCompanyList
       responses:
-        "200":
+        '200':
           description: Success
           schema:
             type: object
@@ -33,18 +25,14 @@ paths:
               companyList:
                 type: array
                 items:
-                  $ref: "#/definitions/companyInfos"
-        # responses may fall through to errors
+                  $ref: '#/definitions/companyInfos'
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: '#/definitions/ErrorResponse'
   /companySharePrice:
-    # binds a127 app logic to a route
-    x-swagger-router-controller: companySharePrice
     get:
       description: Returns company share price for a day
-      # used as the method name of the controller
       operationId: getCompanySharePrice
       parameters:
         - name: companyName
@@ -64,19 +52,34 @@ paths:
           required: true
           type: string
       responses:
-        "200":
+        '200':
           description: Success
           schema:
-            # a pointer to a definition
-            $ref: "#/definitions/SharePriceResponse"
-        # responses may fall through to errors
+            $ref: '#/definitions/SharePriceResponse'
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
-  /swagger:
-    x-swagger-pipe: swagger_raw
-# complex objects have schema definitions
+            $ref: '#/definitions/ErrorResponse'
+  /oneNewPrice:
+    get:
+      description: Returns a one new share price for previous hour
+      operationId: getOneNewprice
+      parameters:
+        - name: companyName
+          in: query
+          description: The name of the company
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/OneNewPriceResponse'
+        default:
+          description: Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /swagger: {}
 definitions:
   companyInfos:
     required:
@@ -106,6 +109,13 @@ definitions:
             amount:
               type: number
               format: float
+  OneNewPriceResponse:
+    required:
+      - newPrice
+    properties:
+      newPrice:
+        type: number
+        format: float
   ErrorResponse:
     required:
       - message

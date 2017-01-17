@@ -9,11 +9,13 @@ function getCompanySharePrice(req, res) {
   var date = new Date(req.swagger.params.date.value)
 
   for (var i = 0; i < 24; i++) {
+
     list[list.length] = {
       time: new Date( date - (24 * 3600 * 1000) + i * (3600 * 1000) ),
       amount: Math.random() * 100
     }
   }
 
+console.log("list:", list)
   res.json({ sharePrices: list });
 }
