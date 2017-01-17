@@ -1,8 +1,8 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
-  version: 0.0.1
+  version: "0.0.1"
   title: Graph API
-host: 'localhost:10010'
+host: localhost:10010
 basePath: /
 schemes:
   - http
@@ -13,6 +13,7 @@ produces:
   - application/json
 paths:
   /companyList:
+    x-swagger-router-controller: companyList
     get:
       description: Returns list of companies with basic infos
       operationId: getCompanyList
@@ -31,6 +32,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
   /companySharePrice:
+    x-swagger-router-controller: companySharePrice
     get:
       description: Returns company share price for a day
       operationId: getCompanySharePrice
@@ -61,6 +63,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
   /oneNewPrice:
+    x-swagger-router-controller: oneNewPrice
     get:
       description: Returns a one new share price for previous hour
       operationId: getOneNewPrice
