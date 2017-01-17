@@ -7,5 +7,5 @@ module.exports = {
 
 function getOneNewPrice(req, res) {
   var amount = Math.random() * 100
-  res.json(amount);
+  res.json({ oneNewPrice : amount });
 }

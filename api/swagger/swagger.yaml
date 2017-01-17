@@ -63,7 +63,7 @@ paths:
   /oneNewPrice:
     get:
       description: Returns a one new share price for previous hour
-      operationId: getOneNewprice
+      operationId: getOneNewPrice
       parameters:
         - name: companyName
           in: query
@@ -111,9 +111,9 @@ definitions:
               format: float
   OneNewPriceResponse:
     required:
-      - newPrice
+      - oneNewPrice
     properties:
-      newPrice:
+      oneNewPrice:
         type: number
         format: float
   ErrorResponse:
