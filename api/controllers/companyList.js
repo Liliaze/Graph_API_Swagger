@@ -16,13 +16,15 @@ function getCompanyList(req, res) {
   }
   
   //tmp :
-  list[0].name = "ENGIE";
-  list[1].name = "Société Générale";
+  list[0].name = "Société Générale";
+  list[1].name = "ENGIE";
   list[2].name = "Air France";
   list[3].name = "SNCF";
   list[4].name = "Accord";
   list[5].name = "Peugeot";
   list[6].name = "BNP Paribas"
+  list[7].name = "Sanofi"
+  list[8].name = "Schneider Electric"
   
   res.json({ companyList: list });
 }

@@ -12,15 +12,14 @@ function getCompanySharePrice(req, res) {
   
   for (var i = 0; i < 24; i++) {
     test = (Math.random() * 100) % 3
-    console.log(test)
     if (test < 0.6)
-      amountTest += amountTest * 20 / 100;
+      amountTest += amountTest * 15 / 100;
     else if (test < 1.2)
-      amountTest += amountTest * 9 / 100;
+      amountTest += amountTest * 7 / 100;
     else if (test < 1.8)
-      amountTest -= amountTest * 9 / 100;
-    else if (test < 2.4)
-      amountTest -= amountTest * 20 / 100;
+      amountTest -= amountTest * 7 / 100;
+    else if (test < 2.5)
+      amountTest -= amountTest * 15 / 100;
     else
       amountTest = amountTest;
      
